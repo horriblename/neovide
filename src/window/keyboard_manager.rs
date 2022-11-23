@@ -72,10 +72,17 @@ impl KeyboardManager {
             } => {
                 // Record the modifier states so that we can properly add them to the keybinding
                 // text
-                self.shift = modifiers.shift_key();
-                self.ctrl = modifiers.control_key();
-                self.alt = modifiers.alt_key();
-                self.logo = modifiers.super_key();
+                if self.ignore_input_this_frame {
+                    self.shift = false;
+                    self.ctrl = false;
+                    self.alt = false;
+                    self.logo = false;
+                } else {
+                    self.shift = modifiers.shift_key();
+                    self.ctrl = modifiers.control_key();
+                    self.alt = modifiers.alt_key();
+                    self.logo = modifiers.super_key();
+                }
             }
             Event::MainEventsCleared => {
                 // If the window wasn't just focused.
